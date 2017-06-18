@@ -5,7 +5,7 @@ class GoogleDriveIFrame extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false,
+      loading: true,
       images: [],
     };
   }
@@ -13,28 +13,41 @@ class GoogleDriveIFrame extends Component {
   render = () => {
     return (
       <div className="iframe--div-scaled-up">
-        { this.state.loading ? 'Loading images' :
-        this.state.images }
+        { this.state.loading ? 'Loading images' : '' }
+        { this.state.images }
       </div>
     )
   }
 
   componentDidMount = () => {
-    let ifrm = <GFrame folderUrl={this.props.folderUrl} />
+    let loadHandler = () => {
+      console.log('hi')
+      this.setState({
+        loading: false
+      });
+    };
+    let ifrm = <GFrame folderUrl={this.props.folderUrl} loadHandler={loadHandler} />;
     this.setState({
       images: ifrm
     });
+  }
+
+  componentWillUnmount = () => {
+    this.setState({
+      images: []
+    })
   }
 }
 
 export default GoogleDriveIFrame;
 
-export const GFrame = ({folderUrl}) => {
+export const GFrame = ({folderUrl, loadHandler}) => {
   return (
     <iframe
      className="google-drive--iframe-size"
      src={folderUrl}
      title="google-drive-images"
+     onLoad={loadHandler}
    />
   )
 }
