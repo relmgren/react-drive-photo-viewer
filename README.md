@@ -15,6 +15,16 @@ my-app/
     index.html
     favicon.ico
   src/
+    components/
+      **every-components-folder**/
+        Component.js
+        Component.test.js
+        Component.css
+    routes/
+      **every-route-folder**/
+        Route.js
+        Route.test.js
+        Route.css
     App.css
     App.js
     App.test.js
